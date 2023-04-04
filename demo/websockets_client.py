@@ -3,12 +3,12 @@
 import asyncio
 import time
 
-import websockets
+import websockets.legacy.client
 
 
 async def hello():
     start_time = time.time()
-    async with websockets.connect("ws://localhost:8000/ws") as websocket:
+    async with websockets.legacy.client.connect("ws://localhost:8000/ws", ping_timeout=None) as websocket:
         print("Connected to the websocket server.")
         while True:
             message = input(">>> ")
