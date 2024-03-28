@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>FastChat</title>
+    <title>Canteen</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -10,13 +10,13 @@
             color: #333;
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: top;
             height: 100vh;
             margin: 0;
         }
         .chat-container {
             width: 100%;
-            max-width: 600px;
+            max-width: 1500px;
             background: #ffffff;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -34,7 +34,7 @@
         }
         .chat-body {
             padding: 20px;
-            flex: 1;
+            flex: 2;
             overflow-y: auto;
         }
         input[type="text"] {
@@ -97,6 +97,9 @@
             <input type="text" id="messageInput" placeholder="想说啥...">
             <button onclick="sendMessage()">发送</button>
         </div>
+        <div class="message-input-container">
+            <button onclick="leaveChatroom()">离开聊天室</button>
+        </div>
     </div>
 
     <script>
@@ -124,6 +127,10 @@
             var message = document.getElementById('messageInput').value;
             websocket.send(message);
             document.getElementById('messageInput').value = '';
+        }
+
+        function leaveChatroom() {
+            websocket.close(1000, 'Bye.')
         }
     </script>
 </body>
