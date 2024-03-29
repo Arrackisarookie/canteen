@@ -1,137 +1,47 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Canteen</title>
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f4f4f4;
-            color: #333;
-            display: flex;
-            justify-content: center;
-            align-items: top;
-            height: 100vh;
-            margin: 0;
-        }
-        .chat-container {
-            width: 100%;
-            max-width: 1500px;
-            background: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-        }
-        .chat-header {
-            background: #007bff;
-            background: linear-gradient(135deg, #0062cc, #0088ff);
-            padding: 15px 20px;
-            color: #ffffff;
-            text-align: center;
-            font-size: 20px;
-        }
-        .chat-body {
-            padding: 20px;
-            flex: 2;
-            overflow-y: auto;
-        }
-        input[type="text"] {
-            padding: 10px;
-            margin-bottom: 10px;
-            border-radius: 20px;
-            border: 1px solid #ddd;
-            width: calc(100% - 22px); /* Adjust width for padding and border */
-            box-sizing: border-box;
-        }
-        button {
-            padding: 10px 20px;
-            background-color: #28a745;
-            color: white;
-            border-radius: 20px;
-            border: none;
-            cursor: pointer;
-            font-weight: bold;
-            text-transform: uppercase;
-        }
-        button:hover {
-            background-color: #218838;
-        }
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
-        li {
-            background-color: #f9f9f9;
-            padding: 10px;
-            border-radius: 20px;
-            margin-bottom: 8px;
-            border: 1px solid #eaeaea;
-        }
-        .message-input-container {
-            display: flex;
-            padding: 10px;
-            background: #f8f9fa;
-            border-top: 1px solid #eaeaea;
-        }
-        .message-input-container input {
-            flex: 1;
-            margin-right: 10px; /* Spacing between input and button */
-        }
-    </style>
-</head>
-<body>
-    <div class="chat-container">
-        <div class="chat-header">
-            Canteen
-        </div>
-        <div class="chat-body">
-            <input type="text" id="roomIdInput" placeholder="输入房间名称">
-            <input type="text" id="userIdInput" placeholder="输入用户名">
-            <button onclick="joinRoom()">加入聊天室</button>
+<html>
+    <head>
+        <title>Chat</title>
+    </head>
+    <body>
+        <h1>WebSocket Chat</h1>
+        <form action="" onsubmit="sendMessage(event)">
+            <label>Room ID: <input type="text" id="roomId" autocomplete="off"/></label>
+            <label>User ID: <input type="text" id="userId" autocomplete="off"/></label>
+            <button onclick="joinRoom(event)">Join</button>
+            <button onclick="leaveRoom(event)">Leave</button>
             <hr>
-            <ul id="messages"></ul>
-        </div>
-        <div class="message-input-container">
-            <input type="text" id="messageInput" placeholder="想说啥...">
-            <button onclick="sendMessage()">发送</button>
-        </div>
-        <div class="message-input-container">
-            <button onclick="leaveChatroom()">离开聊天室</button>
-        </div>
-    </div>
-
-    <script>
-        var websocket;
-        var messages = document.getElementById('messages');
-
-        function startWebSocket(roomId, userId) {
-            websocket = new WebSocket(`ws://localhost:8000/ws/chat/${roomId}/${userId}`);
-
-            websocket.onmessage = function(event) {
-                var message = JSON.parse(event.data);
-                var li = document.createElement('li');
-                li.appendChild(document.createTextNode(`${message.user_id}: ${message.message}`));
-                messages.appendChild(li);
-            };
-        }
-
-        function joinRoom() {
-            var roomId = document.getElementById('roomIdInput').value;
-            var userId = document.getElementById('userIdInput').value;
-            startWebSocket(roomId, userId);
-        }
-
-        function sendMessage() {
-            var message = document.getElementById('messageInput').value;
-            websocket.send(message);
-            document.getElementById('messageInput').value = '';
-        }
-
-        function leaveChatroom() {
-            websocket.close(1000, 'Bye.')
-        }
-    </script>
-</body>
+            <label>Message: <input type="text" id="messageText" autocomplete="off"/></label>
+            <button>Send</button>
+        </form>
+        <ul id="rooms">
+        </ul>
+        <ul id="messages">
+        </ul>
+        <script>
+        var ws = null;
+            function joinRoom(event) {
+                var roomId = document.getElementById("roomId")
+                var userId = document.getElementById("userId")
+                ws = new WebSocket("ws://localhost:8000/" + roomId.value + "/" + userId.value);
+                ws.onmessage = function(event) {
+                    var messages = document.getElementById('messages')
+                    var message = document.createElement('li')
+                    var content = document.createTextNode(event.data)
+                    message.appendChild(content)
+                    messages.appendChild(message)
+                };
+                event.preventDefault()
+            }
+            function sendMessage(event) {
+                var input = document.getElementById("messageText")
+                ws.send(input.value)
+                input.value = ''
+                event.preventDefault()
+            }
+            function leaveRoom(event) {
+                ws.close()
+            }
+        </script>
+    </body>
 </html>
