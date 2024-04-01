@@ -1,18 +1,26 @@
-from fastapi import FastAPI, WebSocket, WebSocketException
-from fastapi.responses import HTMLResponse
+from fastapi import FastAPI
 from starlette import status
-from starlette.websockets import WebSocketDisconnect
+from starlette.exceptions import WebSocketException
+from starlette.responses import HTMLResponse
+from starlette.staticfiles import StaticFiles
+from starlette.websockets import WebSocketDisconnect, WebSocket
 
-from canteen.config import index_html, rooms
 from canteen.model import User, Message
+from canteen.config import index_html, signin_html, rooms
 
 
 app = FastAPI()
+app.mount("/assets", StaticFiles(directory="resource/assets"), name="assets")
 
 
 @app.get("/")
 async def index():
     return HTMLResponse(index_html)
+
+
+@app.get("/login")
+async def login():
+    return HTMLResponse(signin_html)
 
 
 @app.websocket("/{room_id}/{user_id}")

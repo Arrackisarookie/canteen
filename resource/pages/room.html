@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description"
+        content="Probably the most complete UI kit out there. Multiple functionalities and controls added,  extended color palette and beautiful typography, designed as its own extended version of Bootstrap at  the highest level of quality.                             ">
+  <meta name="author" content="Webpixels">
+  <title>Canteen - Chatroom by Python</title>
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700,800|Roboto:400,500,700" rel="stylesheet">
+  <!-- Theme CSS -->
+  <link type="text/css" href="assets/css/theme.css" rel="stylesheet">
+  <!-- Demo CSS - No need to use these in your project -->
+  <link type="text/css" href="assets/css/demo.css" rel="stylesheet">
+</head>
+<body>
+<h1>WebSocket Chat</h1>
+<form action="" onsubmit="sendMessage(event)">
+  <label>Room ID: <input type="text" id="roomId" autocomplete="off"/></label>
+  <label>User ID: <input type="text" id="userId" autocomplete="off"/></label>
+  <button onclick="joinRoom(event)">Join</button>
+  <button onclick="leaveRoom(event)">Leave</button>
+  <hr>
+  <label>Message: <input type="text" id="messageText" autocomplete="off"/></label>
+  <button>Send</button>
+</form>
+<ul id="rooms">
+</ul>
+<ul id="messages">
+</ul>
+<script>
+  var ws = null;
+      function joinRoom(event) {
+          var roomId = document.getElementById("roomId")
+          var userId = document.getElementById("userId")
+          ws = new WebSocket("ws://localhost:8000/" + roomId.value + "/" + userId.value);
+          ws.onmessage = function(event) {
+              var messages = document.getElementById('messages')
+              var message = document.createElement('li')
+              var content = document.createTextNode(event.data)
+              message.appendChild(content)
+              messages.appendChild(message)
+          };
+          event.preventDefault()
+      }
+      function sendMessage(event) {
+          var input = document.getElementById("messageText")
+          ws.send(input.value)
+          input.value = ''
+          event.preventDefault()
+      }
+      function leaveRoom(event) {
+          ws.close()
+      }
+</script>
+</body>
+</html>

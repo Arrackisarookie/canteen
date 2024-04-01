@@ -10,3 +10,6 @@ rooms: dict[str, Room] = {
 
 with open("resource/index.html", "r", encoding="utf-8") as f:
     index_html = f.read()
+
+with open("resource/pages/login.html", "r", encoding="utf-8") as f:
+    signin_html = f.read()

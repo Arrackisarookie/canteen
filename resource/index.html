@@ -1,47 +1,207 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Chat</title>
-    </head>
-    <body>
-        <h1>WebSocket Chat</h1>
-        <form action="" onsubmit="sendMessage(event)">
-            <label>Room ID: <input type="text" id="roomId" autocomplete="off"/></label>
-            <label>User ID: <input type="text" id="userId" autocomplete="off"/></label>
-            <button onclick="joinRoom(event)">Join</button>
-            <button onclick="leaveRoom(event)">Leave</button>
-            <hr>
-            <label>Message: <input type="text" id="messageText" autocomplete="off"/></label>
-            <button>Send</button>
-        </form>
-        <ul id="rooms">
-        </ul>
-        <ul id="messages">
-        </ul>
-        <script>
-        var ws = null;
-            function joinRoom(event) {
-                var roomId = document.getElementById("roomId")
-                var userId = document.getElementById("userId")
-                ws = new WebSocket("ws://localhost:8000/" + roomId.value + "/" + userId.value);
-                ws.onmessage = function(event) {
-                    var messages = document.getElementById('messages')
-                    var message = document.createElement('li')
-                    var content = document.createTextNode(event.data)
-                    message.appendChild(content)
-                    messages.appendChild(message)
-                };
-                event.preventDefault()
-            }
-            function sendMessage(event) {
-                var input = document.getElementById("messageText")
-                ws.send(input.value)
-                input.value = ''
-                event.preventDefault()
-            }
-            function leaveRoom(event) {
-                ws.close()
-            }
-        </script>
-    </body>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="An unsafe chat room implemented by python fastapi websockets.">
+  <meta name="author" content="Aiar">
+  <title>Canteen - Chatroom by Python</title>
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700,800|Roboto:400,500,700" rel="stylesheet">
+  <!-- Theme CSS -->
+  <link type="text/css" href="assets/css/theme.css" rel="stylesheet">
+  <!-- Demo CSS - No need to use these in your project -->
+  <link type="text/css" href="assets/css/demo.css" rel="stylesheet">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-transparent navbar-dark bg-dark py-4">
+  <div class="container">
+    <a class="navbar-brand" href=""><strong>Canteen</strong> Chatroom</a>
+  </div>
+</nav>
+<main class="main">
+  <section class="py-xl bg-cover bg-size--cover" style="background-image: url('assets/images/backgrounds/img-1.jpg')">
+    <span class="mask bg-primary alpha-6"></span>
+    <div class="container d-flex align-items-center">
+      <div class="col">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card border-0">
+              <div class="card-image">
+                <img class="card-img" src="assets/images/backgrounds/img-1.jpg" alt="Card image">
+                <div class="card-img-overlay d-flex">
+                  <div class="col-lg-12">
+                    <h4 class="heading h3">Card title</h4>
+                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
+                      additional content. This content is a little bit longer.</p>
+                    <p class="card-text">Last updated 3 mins ago</p>
+                    <ul id="messages">
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="row mb-1">
+                  <div class="col">
+                    <div class="card-icon-actions card-icon-actions-lg">
+                      <a href="#" class="love active"><i class="fas fa-heart"></i></a>
+                      <a href="#"><i class="fas fa-comment"></i></a>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="card-icon-actions card-icon-actions-lg text-right">
+                      <a href="#"><i class="fas fa-bookmark"></i></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer">
+                <form class="card-comment-box" role="form" onsubmit="sendMessage(event)">
+                  <div class="row">
+                    <div class="col-10">
+                      <div class="row">
+                        <div class="col-6">
+                          <input type="text" class="form-control" placeholder="Room ID" id="roomId" autocomplete="off"/>
+                        </div>
+                        <div class="col-6">
+                          <input type="text" class="form-control" placeholder="User ID" id="userId" autocomplete="off"/>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-2 text-right">
+                      <button onclick="joinRoom(event)" class="btn btn-secondary btn-icon-only">
+                        <span class="btn-inner--icon"><i class="fas fa-sign-in-alt"></i></span>
+                      </button>
+                      <button onclick="leaveRoom(event)" class="btn btn-secondary btn-icon-only">
+                        <span class="btn-inner--icon"><i class="fas fa-sign-out-alt"></i></span>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="row pt-1">
+                    <div class="col-10">
+                      <textarea id="messageText" autocomplete="off" rows="1" class="form-control textarea-autosize"
+                                placeholder="整两句..."></textarea>
+                    </div>
+                    <div class="col-2 text-right">
+                      <div class="card-icon-actions card-icon-actions-lg">
+                        <button type="submit" class="btn btn-secondary btn-icon-only">
+                          <span class="btn-inner--icon"><i class="fas fa-arrow-left"></i></span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mt-4">
+          <div class="col-md-4">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="heading heading-5 strong-600">Special title treatment</h5>
+                <h6 class="heading heading-sm strong-400 text-muted mb-4">
+                  2 hrs ago
+                </h6>
+                <p class="card-text">With supporting text below...</p>
+                <a href="#" class="btn btn-sm btn-primary">Go somewhere</a>
+              </div>
+              <div class="card-footer">
+                <div class="row align-items-center">
+                  <div class="col pr-0">
+                    <span class="avatar avatar-sm bg-purple">JD</span>
+                    <span class="avatar-content">David Wally</span>
+                  </div>
+                  <div class="col text-right text-xs-right pl-0">
+                    <ul class="list-inline mb-0">
+                      <li class="list-inline-item pr-2">
+                        <a href="#"><i class="fas fa-heart mr-1"></i> 50</a>
+                      </li>
+                      <li class="list-inline-item">
+                        <i class="fas fa-eye text-muted mr-1"></i> 750
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="heading heading-5 strong-600">Special title treatment</h5>
+                <h6 class="heading heading-sm strong-400 text-muted mb-4">
+                  2 hrs ago
+                </h6>
+                <p class="card-text">With supporting text below...</p>
+                <a href="#" class="btn btn-sm btn-primary">Go somewhere</a>
+              </div>
+              <div class="card-footer">
+                <div class="row align-items-center">
+                  <div class="col pr-0">
+                    <span class="avatar avatar-sm bg-purple">JD</span>
+                    <span class="avatar-content">David Wally</span>
+                  </div>
+                  <div class="col text-right text-xs-right pl-0">
+                    <ul class="list-inline mb-0">
+                      <li class="list-inline-item pr-2">
+                        2 hrs ago
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="heading heading-5 strong-600">Special title treatment</h5>
+                <h6 class="heading heading-sm strong-400 text-muted mb-4">
+                  2 hrs ago
+                </h6>
+                <p class="card-text">With supporting text below...</p>
+                <a href="#" class="btn btn-sm btn-primary">Go somewhere</a>
+              </div>
+              <div class="card-footer">
+                <div class="row align-items-center">
+                  <div class="col pr-0">
+                    <span class="avatar avatar-sm bg-purple">JD</span>
+                    <span class="avatar-content">David Wally</span>
+                  </div>
+                  <div class="col text-right text-xs-right pl-0">
+                    <ul class="list-inline mb-0">
+                      <li class="list-inline-item pr-2">
+                        <a href="#"><i class="fas fa-heart mr-1"></i> 50</a>
+                      </li>
+                      <li class="list-inline-item">
+                        <i class="fas fa-eye text-muted mr-1"></i> 750
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+<!-- Core -->
+<script src="assets/vendor/jquery/jquery.min.js"></script>
+<script src="assets/vendor/popper/popper.min.js"></script>
+<script src="assets/js/bootstrap/bootstrap.min.js"></script>
+<!-- FontAwesome 5 -->
+<script src="assets/vendor/fontawesome/js/fontawesome-all.min.js" defer></script>
+<!-- Page plugins -->
+<script src="assets/vendor/bootstrap-select/js/bootstrap-select.min.js"></script>
+<script src="assets/vendor/bootstrap-tagsinput/bootstrap-tagsinput.min.js"></script>
+<script src="assets/vendor/input-mask/input-mask.min.js"></script>
+<script src="assets/vendor/nouislider/js/nouislider.min.js"></script>
+<script src="assets/vendor/textarea-autosize/textarea-autosize.min.js"></script>
+<!-- Theme JS -->
+<script src="assets/js/theme.js"></script>
+<script src="assets/js/demo.js"></script>
+</body>
 </html>
