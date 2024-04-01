@@ -5,7 +5,8 @@ function joinRoom(event) {
     ws = new WebSocket("ws://localhost:8000/" + roomId.value + "/" + userId.value);
     ws.onmessage = function(event) {
         var messages = document.getElementById('messages')
-        var message = document.createElement('li')
+        var message = document.createElement('p')
+        message.className = "mt-4"
         var content = document.createTextNode(event.data)
         message.appendChild(content)
         messages.appendChild(message)

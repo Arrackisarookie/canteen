@@ -20,40 +20,37 @@
   </div>
 </nav>
 <main class="main">
-  <section class="py-xl bg-cover bg-size--cover" style="background-image: url('assets/images/backgrounds/img-1.jpg')">
-    <span class="mask bg-primary alpha-6"></span>
+  <section class="py-lg bg-light">
+    <span class="mask bg-info alpha-3"></span>
     <div class="container d-flex align-items-center">
       <div class="col">
         <div class="row">
           <div class="col-md-12">
-            <div class="card border-0">
-              <div class="card-image">
-                <img class="card-img" src="assets/images/backgrounds/img-1.jpg" alt="Card image">
-                <div class="card-img-overlay d-flex">
-                  <div class="col-lg-12">
-                    <h4 class="heading h3">Card title</h4>
-                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
-                      additional content. This content is a little bit longer.</p>
-                    <p class="card-text">Last updated 3 mins ago</p>
-                    <ul id="messages">
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <div class="card-body">
-                <div class="row mb-1">
-                  <div class="col">
-                    <div class="card-icon-actions card-icon-actions-lg">
-                      <a href="#" class="love active"><i class="fas fa-heart"></i></a>
-                      <a href="#"><i class="fas fa-comment"></i></a>
-                    </div>
-                  </div>
-                  <div class="col">
-                    <div class="card-icon-actions card-icon-actions-lg text-right">
-                      <a href="#"><i class="fas fa-bookmark"></i></a>
-                    </div>
-                  </div>
-                </div>
+            <div class="card px-3 py-4 border-0 mb-0 mh-500">
+              <div class="card-body" id="messages">
+                <h1 class="heading h3">Even more components</h1>
+                <p class="mt-4">
+                  We know how much you love Bootstrap components. That's why we've customized, and
+                  also, introduced dozens of completely new utilities, components, and plugins.
+                </p>
+                <p class="mt-4">
+                  We know how much you love Bootstrap components. That's why we've customized.
+                </p>
+                <p class="mt-4">
+                  We know how much you love Bootstrap components. That's why we've customized.
+                </p>
+                <p class="mt-4">
+                  We know how much you love Bootstrap components. That's why we've customized.
+                </p>
+                <p class="mt-4">
+                  We know how much you love Bootstrap components. That's why we've customized.
+                </p>
+                <p class="mt-4">
+                  We know how much you love Bootstrap components. That's why we've customized.
+                </p>
+                <p class="mt-4">
+                  We know how much you love Bootstrap components. That's why we've customized.
+                </p>
               </div>
               <div class="card-footer">
                 <form class="card-comment-box" role="form" onsubmit="sendMessage(event)">
@@ -61,7 +58,7 @@
                     <div class="col-10">
                       <div class="row">
                         <div class="col-6">
-                          <input type="text" class="form-control" placeholder="Room ID" id="roomId" autocomplete="off"/>
+                          <input type="hidden" placeholder="Room ID" id="roomId" value="main"/>
                         </div>
                         <div class="col-6">
                           <input type="text" class="form-control" placeholder="User ID" id="userId" autocomplete="off"/>
@@ -85,7 +82,8 @@
                     <div class="col-2 text-right">
                       <div class="card-icon-actions card-icon-actions-lg">
                         <button type="submit" class="btn btn-secondary btn-icon-only">
-                          <span class="btn-inner--icon"><i class="fas fa-arrow-left"></i></span>
+                                                    <span class="btn-inner--icon"><i
+                                                        class="fas fa-arrow-left"></i></span>
                         </button>
                       </div>
                     </div>
