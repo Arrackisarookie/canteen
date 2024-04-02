@@ -1,13 +1,25 @@
+from pydantic_settings import BaseSettings
+
+
+class AppSetting(BaseSettings):
+    class Config:
+        env_file = ".env"
+        env_file_encoding = "utf-8"
+
+    SECRET_KEY: str
+    SECRET_ALGORITHM: str
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 15
+
+
+setting = AppSetting()
+
+
 with open("resource/index.html", "r", encoding="utf-8") as f:
     index_html = f.read()
 
 with open("resource/pages/login.html", "r", encoding="utf-8") as f:
     signin_html = f.read()
 
-
-SECRET_KEY = "c627dcc5873ec9866fe6e02ee97fcad95417906df67a687cda1ccb18a9aca0f8"
-SECRET_ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
 fake_users_db = {
     "johndoe": {

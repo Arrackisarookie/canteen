@@ -14,7 +14,7 @@ from starlette.websockets import WebSocketDisconnect, WebSocket
 
 from canteen.model import UserModel, UserInDbModel, TokenData, Token
 from canteen.schema import User, Message, Room
-from canteen.config import index_html, fake_users_db, SECRET_KEY, SECRET_ALGORITHM, ACCESS_TOKEN_EXPIRE_MINUTES
+from canteen.config import index_html, fake_users_db, setting
 
 app = FastAPI()
 app.mount("/assets", StaticFiles(directory="resource/assets"), name="assets")
@@ -59,7 +59,7 @@ def create_access_token(data: dict, expires_delta: Union[timedelta, None] = None
     if expires_delta:
         expire = datetime.now(timezone.utc) + expires_delta
     to_encode.update({"exp": expire})
-    encode_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=SECRET_ALGORITHM)
+    encode_jwt = jwt.encode(to_encode, setting.SECRET_KEY, algorithm=setting.SECRET_ALGORITHM)
     return encode_jwt
 
 
@@ -70,7 +70,7 @@ async def get_current_user(token: str = Depends(oauth2_schema)):
         headers={"WWW-Authenticate": "Bearer"},
     )
     try:
-        payload = jwt.decode(token, SECRET_KEY, algorithms=[SECRET_ALGORITHM])
+        payload = jwt.decode(token, setting.SECRET_KEY, algorithms=[setting.SECRET_ALGORITHM])
         username: str = payload.get("sub")
         if username is None:
             raise credentials_exception
@@ -106,7 +106,7 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends()):
             detail="Incorrect username or password",
             headers={"WWW-Authenticate": "Bearer"}
         )
-    access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    access_token_expires = timedelta(minutes=setting.ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = create_access_token(
         data={"sub": user.username},
         expires_delta=access_token_expires
