@@ -7,10 +7,10 @@ from starlette.websockets import WebSocket
 
 class User:
     def __init__(
-        self, user_id: str,
+        self, username: str,
         ws_connection: Union[WebSocket, None] = None
     ):
-        self.user_id: str = user_id
+        self.username: str = username
         self.ws_connection: Union[WebSocket, None] = ws_connection
 
 
@@ -22,7 +22,7 @@ class Message:
 
     def json(self):
         return {
-            "user": self.user.user_id,
+            "user": self.user.username,
             "content": self.content,
             "create_time": self.create_time.strftime("%c")
         }
@@ -76,15 +76,15 @@ class Room:
     async def welcome(self, user: User):
         self.add_user(user)
 
-        content = f"{user.user_id} enter the room {self.room_id}"
+        content = f"{user.username} enter the room {self.room_id}"
         await self.broadcast(content)
 
-        content = f"Welcome, {user.user_id}! You have joined the room: {self.room_id}"
+        content = f"Welcome, {user.username}! You have joined the room: {self.room_id}"
         await self.send_to(user, content)
 
     async def farewell(self, user: User):
         self.disconnect(user.ws_connection)
-        content = f"User {user.user_id} left the room"
+        content = f"User {user.username} left the room"
         await self.broadcast(content)
 
     def disconnect(self, websocket: WebSocket):

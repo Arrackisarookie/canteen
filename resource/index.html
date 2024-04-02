@@ -54,26 +54,6 @@
               </div>
               <div class="card-footer">
                 <form class="card-comment-box" role="form" onsubmit="sendMessage(event)">
-                  <div class="row">
-                    <div class="col-10">
-                      <div class="row">
-                        <div class="col-6">
-                          <input type="hidden" placeholder="Room ID" id="roomId" value="main"/>
-                        </div>
-                        <div class="col-6">
-                          <input type="text" class="form-control" placeholder="User ID" id="userId" autocomplete="off"/>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-2 text-right">
-                      <button onclick="joinRoom(event)" class="btn btn-secondary btn-icon-only">
-                        <span class="btn-inner--icon"><i class="fas fa-sign-in-alt"></i></span>
-                      </button>
-                      <button onclick="leaveRoom(event)" class="btn btn-secondary btn-icon-only">
-                        <span class="btn-inner--icon"><i class="fas fa-sign-out-alt"></i></span>
-                      </button>
-                    </div>
-                  </div>
                   <div class="row pt-1">
                     <div class="col-10">
                       <textarea id="messageText" autocomplete="off" rows="1" class="form-control textarea-autosize"

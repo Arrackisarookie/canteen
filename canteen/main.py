@@ -2,6 +2,7 @@ from datetime import timedelta, datetime, timezone
 from typing import Union
 
 import bcrypt
+from faker import Faker
 from fastapi import FastAPI, Depends
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from jose import JWTError, jwt
@@ -19,6 +20,7 @@ app = FastAPI()
 app.mount("/assets", StaticFiles(directory="resource/assets"), name="assets")
 
 oauth2_schema = OAuth2PasswordBearer(tokenUrl="token")
+fake = Faker(["zh_CN"])
 
 
 def verify_password(plain_password: str, hashed_password: str):
@@ -88,6 +90,11 @@ async def get_current_active_user(current_user: UserModel = Depends(get_current_
     return current_user
 
 
+@app.get("/faker/name")
+async def get_fake_name():
+    return fake.name()
+
+
 @app.post("/token")
 async def login(form_data: OAuth2PasswordRequestForm = Depends()):
     user = authenticate_user(fake_users_db, form_data.username, form_data.password)
@@ -115,18 +122,12 @@ async def index():
     return HTMLResponse(index_html)
 
 
-@app.websocket("/{room_id}/{user_id}")
-async def websocket_endpoint(
-    websocket: WebSocket,
-    room_id: str,
-    user_id: str
-):
-    if room_id not in rooms:
-        raise WebSocketException(code=status.WS_1003_UNSUPPORTED_DATA)
-    room = rooms[room_id]
-
+@app.websocket("/room/main")
+async def websocket_endpoint(websocket: WebSocket):
+    room = rooms["main"]
+    username = fake.name()
     await room.connect_manager.connect(websocket)
-    user = User(user_id, websocket)
+    user = User(username, websocket)
     await room.welcome(user)
 
     try:
