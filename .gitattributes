@@ -2,3 +2,4 @@ resource/* linguist-vendored
 *.js linguist-vendored
 *.scss linguist-vendored
 *.css linguist-vendored
+demo.js linguist-vendored=false
