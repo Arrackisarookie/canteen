@@ -7,20 +7,22 @@ from fastapi import FastAPI, Depends
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from jose import JWTError, jwt
 from starlette import status
-from starlette.exceptions import WebSocketException, HTTPException
+from starlette.exceptions import HTTPException
 from starlette.responses import HTMLResponse
 from starlette.staticfiles import StaticFiles
 from starlette.websockets import WebSocketDisconnect, WebSocket
 
 from canteen.model import UserModel, UserInDbModel, TokenData, Token
-from canteen.schema import User, Message
-from canteen.config import index_html, rooms, fake_users_db, SECRET_KEY, SECRET_ALGORITHM, ACCESS_TOKEN_EXPIRE_MINUTES
+from canteen.schema import User, Message, Room
+from canteen.config import index_html, fake_users_db, SECRET_KEY, SECRET_ALGORITHM, ACCESS_TOKEN_EXPIRE_MINUTES
 
 app = FastAPI()
 app.mount("/assets", StaticFiles(directory="resource/assets"), name="assets")
 
 oauth2_schema = OAuth2PasswordBearer(tokenUrl="token")
 fake = Faker(["zh_CN"])
+
+room = Room("main")
 
 
 def verify_password(plain_password: str, hashed_password: str):
@@ -124,7 +126,6 @@ async def index():
 
 @app.websocket("/room/main")
 async def websocket_endpoint(websocket: WebSocket):
-    room = rooms["main"]
     username = fake.name()
     await room.connect_manager.connect(websocket)
     user = User(username, websocket)
