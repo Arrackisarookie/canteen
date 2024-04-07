@@ -6,7 +6,7 @@ from canteen.chat.router import router as chat_router
 
 
 app = FastAPI()
-app.mount("/assets", StaticFiles(directory="resource/assets"), name="assets")
+app.mount("/assets", StaticFiles(directory="assets"), name="assets")
 
 app.include_router(auth_router, tags=["Auth"])
 app.include_router(chat_router, tags=["Chat"])

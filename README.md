@@ -2,10 +2,18 @@
 An unsafe chat room implemented by FastAPI and bootstrap.
 
 ## Todo
-1. [x] ~~添加Session记录user_id，未登录的无法发言~~ 访客直接发言，昵称随机生成
-2. [ ] ~~弹出框登录~~
-3. [ ] 聊天框固定大小，缓冲区50条消息
-4. [ ] 个人发言在右，其他发言在左
-5. [x] 转向Jinja2
-6. [x] 头像
-7. [x] 仿微信气泡
+1. [x] 访客直接发言
+2. [x] 昵称随机生成
+3. [x] 转向Jinja2
+4. [x] 聊天框固定大小
+5. [x] 头像
+6. [x] 仿微信气泡
+7. [x] 自由随机昵称
+8. [ ] 个人发言在右，其他发言在左
+9. [ ] 缓冲区50条消息
+10. [ ] 处理滚动条
+
+## Reference
++ [FastAPI WebSocket](https://fastapi.tiangolo.com/zh/advanced/websockets/)
++ [Boomerang UI Kit](https://www.bootmb.com/themes/boomerang/)
++ [CSS3 巧妙实现聊天气泡](https://segmentfault.com/a/1190000007159738)

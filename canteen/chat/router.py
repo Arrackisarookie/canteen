@@ -23,16 +23,15 @@ async def index(request: Request):
     )
 
 
-@router.get("/faker/name")
+@router.get("/fake/name")
 async def get_fake_name():
-    return fake.name()
+    return {"nickname": fake.name()}
 
 
-@router.websocket("/room/main")
-async def websocket_endpoint(websocket: WebSocket):
-    username = fake.name()
+@router.websocket("/chatroom")
+async def websocket_endpoint(websocket: WebSocket, nickname: str):
     await room.connect_manager.connect(websocket)
-    user = User(username, websocket)
+    user = User(nickname, websocket)
     await room.welcome(user)
 
     try:

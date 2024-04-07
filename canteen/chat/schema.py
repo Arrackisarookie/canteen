@@ -15,16 +15,24 @@ class User:
 
 
 class Message:
-    def __init__(self, user: User, content: str, create_time: datetime = datetime.now()):
-        self.user: User = user
+    def __init__(
+        self,
+        sender: User,
+        content: str,
+        receiver: Union[User, None] = None,
+        create_time: datetime = datetime.now()
+    ):
+        self.sender: User = sender
         self.content: str = content
         self.create_time: datetime = create_time
+        self.receiver = receiver
 
     def json(self):
         return {
-            "user": self.user.username,
+            "sender": self.sender.username,
             "content": self.content,
-            "create_time": self.create_time.strftime("%c")
+            "create_time": self.create_time.strftime("%c"),
+            "receiver": self.receiver.username if self.receiver else None,
         }
 
     def __repr__(self):
@@ -61,17 +69,17 @@ class Room:
         self.users: list[User] = []
         self.messages: list[Message] = []
         self.connect_manager = ConnectionManager()
-        self.compere = User(f"Room_{room_id}")
+        self.compere = User(f"管理")
 
     async def broadcast(self, message: Union[str, Message]):
         if not isinstance(message, Message):
             message = Message(self.compere, message)
         await self.connect_manager.broadcast(message.json())
 
-    async def send_to(self, user: User, message: Union[str, Message]):
+    async def send_to(self, receiver: User, message: Union[str, Message]):
         if not isinstance(message, Message):
-            message = Message(self.compere, message)
-        await self.connect_manager.send_personal_message(user.ws_connection, message.json())
+            message = Message(self.compere, message, receiver=receiver)
+        await self.connect_manager.send_personal_message(receiver.ws_connection, message.json())
 
     async def welcome(self, user: User):
         self.add_user(user)
