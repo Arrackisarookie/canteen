@@ -7,3 +7,5 @@ An unsafe chat room implemented by FastAPI and bootstrap.
 3. [ ] 聊天框固定大小，缓冲区50条消息
 4. [ ] 个人发言在右，其他发言在左
 5. [x] 转向Jinja2
+6. [x] 头像
+7. [x] 仿微信气泡
