@@ -13,32 +13,27 @@
   <!-- Demo CSS - No need to use these in your project -->
   <link type="text/css" href="assets/css/demo.css" rel="stylesheet">
 </head>
-<body>
+<body class="bg-light">
+  <span class="mask bg-info alpha-3"></span>
 <nav class="navbar navbar-expand-lg navbar-transparent navbar-dark bg-dark py-4">
   <div class="container">
     <a class="navbar-brand" href=""><strong>Canteen</strong> Chatroom</a>
   </div>
 </nav>
 <main class="main">
-  <section class="py-lg bg-light">
-    <span class="mask bg-info alpha-3"></span>
+  <section class="pt-lg bg-transparent">
     <div class="container d-flex align-items-center">
       <div class="col">
         <div class="row">
           <div class="col-md-12">
             <div class="card px-3 py-4 border-0 mb-0 mh-500">
-              <div class="card-body" id="messages">
-                <h1 class="heading h3">Even more components</h1>
-                <p class="mt-4">
-                  We know how much you love Bootstrap components. That's why we've customized, and
-                  also, introduced dozens of completely new utilities, components, and plugins.
-                </p>
+              <div class="card-body pt-0" id="messages">
               </div>
-              <div class="card-footer">
+              <div class="card-footer py-3">
                 <form class="card-comment-box" role="form" onsubmit="sendMessage(event)">
                   <div class="row pt-1">
-                    <div class="col-10">
-                      <textarea id="messageText" autocomplete="off" rows="1" class="form-control textarea-autosize"
+                    <div class="col-10" id="input-field">
+                      <textarea id="messageText" autocomplete="off" rows="2" class="form-control textarea-autosize"
                                 placeholder="整两句..."></textarea>
                     </div>
                     <div class="col-2 text-right">
@@ -55,99 +50,37 @@
             </div>
           </div>
         </div>
-        <div class="row mt-4">
-          <div class="col-md-4">
-            <div class="card">
-              <div class="card-body">
-                <h5 class="heading heading-5 strong-600">Special title treatment</h5>
-                <h6 class="heading heading-sm strong-400 text-muted mb-4">
-                  2 hrs ago
-                </h6>
-                <p class="card-text">With supporting text below...</p>
-                <a href="#" class="btn btn-sm btn-primary">Go somewhere</a>
-              </div>
-              <div class="card-footer">
-                <div class="row align-items-center">
-                  <div class="col pr-0">
-                    <span class="avatar avatar-sm bg-purple">JD</span>
-                    <span class="avatar-content">David Wally</span>
-                  </div>
-                  <div class="col text-right text-xs-right pl-0">
-                    <ul class="list-inline mb-0">
-                      <li class="list-inline-item pr-2">
-                        <a href="#"><i class="fas fa-heart mr-1"></i> 50</a>
-                      </li>
-                      <li class="list-inline-item">
-                        <i class="fas fa-eye text-muted mr-1"></i> 750
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="card">
-              <div class="card-body">
-                <h5 class="heading heading-5 strong-600">Special title treatment</h5>
-                <h6 class="heading heading-sm strong-400 text-muted mb-4">
-                  2 hrs ago
-                </h6>
-                <p class="card-text">With supporting text below...</p>
-                <a href="#" class="btn btn-sm btn-primary">Go somewhere</a>
-              </div>
-              <div class="card-footer">
-                <div class="row align-items-center">
-                  <div class="col pr-0">
-                    <span class="avatar avatar-sm bg-purple">JD</span>
-                    <span class="avatar-content">David Wally</span>
-                  </div>
-                  <div class="col text-right text-xs-right pl-0">
-                    <ul class="list-inline mb-0">
-                      <li class="list-inline-item pr-2">
-                        2 hrs ago
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="card">
-              <div class="card-body">
-                <h5 class="heading heading-5 strong-600">Special title treatment</h5>
-                <h6 class="heading heading-sm strong-400 text-muted mb-4">
-                  2 hrs ago
-                </h6>
-                <p class="card-text">With supporting text below...</p>
-                <a href="#" class="btn btn-sm btn-primary">Go somewhere</a>
-              </div>
-              <div class="card-footer">
-                <div class="row align-items-center">
-                  <div class="col pr-0">
-                    <span class="avatar avatar-sm bg-purple">JD</span>
-                    <span class="avatar-content">David Wally</span>
-                  </div>
-                  <div class="col text-right text-xs-right pl-0">
-                    <ul class="list-inline mb-0">
-                      <li class="list-inline-item pr-2">
-                        <a href="#"><i class="fas fa-heart mr-1"></i> 50</a>
-                      </li>
-                      <li class="list-inline-item">
-                        <i class="fas fa-eye text-muted mr-1"></i> 750
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   </section>
 </main>
+<!-- Modal -->
+<div class="modal modal-danger fade" id="modal_5" tabindex="-1" role="dialog" aria-labelledby="modal_5"
+     aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modal_title_6">This is way to dangerous</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="py-3 text-center">
+          <i class="fas fa-exclamation-circle fa-4x"></i>
+          <h4 class="heading mt-4">Should we stop now?</h4>
+          <p>
+            You can easy create stackable modal boxes. For example, your inline content or Ajax response can contain a
+            gallery:
+          </p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Probably not</button>
+      </div>
+    </div>
+  </div>
+</div>
 <!-- Core -->
 <script src="assets/vendor/jquery/jquery.min.js"></script>
 <script src="assets/vendor/popper/popper.min.js"></script>
