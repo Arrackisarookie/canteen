@@ -1,10 +1,11 @@
 $('#modal_5').modal("show");
 var ws = null;
-var nickname = getNickName()
+var nickname = getNickName();
+var website = "chat.aiar.site";
 
 function getNickName() {
     const Http = new XMLHttpRequest();
-    const url='http://0.0.0.0:8000/fake/name';
+    const url='http://' + website + '/fake/name';
     Http.open("GET", url);
     Http.send();
 
@@ -16,7 +17,7 @@ function getNickName() {
 }
 
 function connect() {
-    var url = "ws://0.0.0.0:8000/chatroom?nickname=" + nickname;
+    var url = "ws://" + website + "/chatroom?nickname=" + nickname;
     ws = new WebSocket(url);
     ws.onmessage = (event) => {
         var message_data = JSON.parse(event.data)
