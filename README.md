@@ -12,8 +12,13 @@ An unsafe chat room implemented by FastAPI and bootstrap.
 8. [ ] 个人发言在右，其他发言在左
 9. [ ] 缓冲区50条消息
 10. [ ] 处理滚动条
+11. [ ] 前端迁移至vue
+12. [ ] 跨域的问题
 
 ## Reference
 + [FastAPI WebSocket](https://fastapi.tiangolo.com/zh/advanced/websockets/)
 + [Boomerang UI Kit](https://www.bootmb.com/themes/boomerang/)
 + [CSS3 巧妙实现聊天气泡](https://segmentfault.com/a/1190000007159738)
+
+## Notice
+Vercel 部署时需要将 Nodejs 版本由 `20.*` 改为 `18.*`，否则会报 Python 版本不支持啥的。

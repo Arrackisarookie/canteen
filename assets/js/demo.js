@@ -4,7 +4,7 @@ var nickname = getNickName()
 
 function getNickName() {
     const Http = new XMLHttpRequest();
-    const url='http://localhost:8000/fake/name';
+    const url='http://0.0.0.0:8000/fake/name';
     Http.open("GET", url);
     Http.send();
 
@@ -16,7 +16,7 @@ function getNickName() {
 }
 
 function connect() {
-    var url = "ws://localhost:8000/chatroom?nickname=" + nickname;
+    var url = "ws://0.0.0.0:8000/chatroom?nickname=" + nickname;
     ws = new WebSocket(url);
     ws.onmessage = (event) => {
         var message_data = JSON.parse(event.data)
