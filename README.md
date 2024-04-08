@@ -9,7 +9,7 @@ An unsafe chat room implemented by FastAPI and bootstrap.
 5. [x] 头像
 6. [x] 仿微信气泡
 7. [x] 自由随机昵称
-8. [ ] 个人发言在右，其他发言在左
+8. [x] 个人发言在右，其他发言在左
 9. [ ] 缓冲区50条消息
 10. [ ] 处理滚动条
 11. [ ] 前端迁移至vue
