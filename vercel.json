@@ -1,5 +1,5 @@
 {
-  "devCommand": "uvicorn main:app --host 0.0.0.0 --port 8000",
+  "devCommand": "uvicorn canteen.main:app",
   "builds": [
     {
       "src": "canteen/main.py",
