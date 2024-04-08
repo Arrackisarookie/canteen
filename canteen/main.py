@@ -7,6 +7,7 @@ from canteen.chat.router import router as chat_router
 
 origins = [
     "http://localhost:8000",
+    "http://localhost:5173",
     "https://chat.aiar.site",
     "https://canteen-three.vercel.app",
 ]
