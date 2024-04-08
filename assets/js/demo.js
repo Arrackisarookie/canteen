@@ -16,7 +16,7 @@ function getNickName() {
 }
 
 function connect() {
-    var url = "ws://chat.aiar.site/chatroom?nickname=" + nickname;
+    var url = "wss://chat.aiar.site/chatroom?nickname=" + nickname;
     ws = new WebSocket(url);
     ws.onmessage = (event) => {
         var message_data = JSON.parse(event.data)
