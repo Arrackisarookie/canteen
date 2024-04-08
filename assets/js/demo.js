@@ -4,7 +4,7 @@ var nickname = getNickName();
 
 function getNickName() {
     const Http = new XMLHttpRequest();
-    const url="http://chat.aiar.site/fake/name";
+    const url="https://chat.aiar.site/fake/name";
     Http.open("GET", url);
     Http.send();
 
