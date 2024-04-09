@@ -1,6 +1,5 @@
 from faker import Faker
 from fastapi import APIRouter
-from fastapi.templating import Jinja2Templates
 from starlette.requests import Request
 from starlette.responses import HTMLResponse
 from starlette.websockets import WebSocket, WebSocketDisconnect
@@ -11,16 +10,6 @@ room = Room("main")
 fake = Faker(["zh_CN"])
 
 router = APIRouter()
-templates = Jinja2Templates(directory="templates")
-
-
-@router.get("/", response_class=HTMLResponse)
-async def index(request: Request):
-    return templates.TemplateResponse(
-        request=request,
-        name="index.html",
-        context={"username": "TestUser"}
-    )
 
 
 @router.get("/fake/name")
