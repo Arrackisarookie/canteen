@@ -1,3 +1,63 @@
+<script>
+// $('#modal_5').modal("show");
+export default {
+  name: 'HomeView',
+  data() {
+    return {
+      sockets_bay_api_key: "demo",
+      connection_ready: false,
+      connection_error: false,
+      nickname: "",
+      websocket: null,
+      new_message: "",
+      messages: [],
+      domain_name: import.meta.env.VITE_DOMAIN_NAME,
+      port: import.meta.env.VITE_PORT
+    }
+  },
+  methods: {
+    init_chat() {
+      //ask for a nickname
+      if (this.nickname == "") this.nickname = prompt("Enter a nickname:");
+      console.log(import.meta.env.VITE_DOMAIN_NAME)
+      //connect to Sockets Bay
+      var sockets_bay_url = `ws://` + this.domain_name + `:` + this.port + `/chatroom?nickname=` + this.nickname;
+      this.websocket = new WebSocket(sockets_bay_url);
+      //
+      this.websocket.onopen = this.onSocketOpen;
+      this.websocket.onmessage = this.onSocketMessage;
+      this.websocket.onerror = this.onSockerError;
+    },
+    onSocketOpen(evt) {
+      this.connection_ready = true;
+    },
+    onSocketMessage(evt) {
+      //we parse the json that we receive
+      var received = JSON.parse(evt.data);
+      //check if it's our message or from a friend
+      this.messages.push({ from: "other", message: received.content });
+      //scroll to the bottom of the messages div
+      const messages_div = document.getElementById('messages');
+      messages_div.scrollTo({ top: messages_div.scrollHeight, behavior: 'smooth' });
+    },
+
+    onSockerError(evt) {
+      this.connection_error = true;
+    },
+
+    send_message() {
+      var to_send = { from: this.nickname, message: this.new_message };
+      this.websocket.send(JSON.stringify(to_send));
+      this.messages.push({ from: "me", message: this.new_message });
+      this.new_message = "";
+    }
+  },
+  mounted() {
+    this.init_chat();
+  }
+}
+</script>
+
 <template>
   <span class="mask bg-info alpha-3"></span>
   <nav class="navbar navbar-expand-lg navbar-transparent navbar-dark bg-dark py-4">
@@ -63,64 +123,6 @@
     </div>
   </div>
 </template>
-
-<script>
-// $('#modal_5').modal("show");
-export default {
-  name: 'HomeView',
-  data() {
-    return {
-      sockets_bay_api_key: "demo",
-      connection_ready: false,
-      connection_error: false,
-      nickname: "",
-      websocket: null,
-      new_message: "",
-      messages: []
-    }
-  },
-  methods: {
-    init_chat() {
-      //ask for a nickname
-      if (this.nickname == "") this.nickname = prompt("Enter a nickname:");
-
-      //connect to Sockets Bay
-      var sockets_bay_url = `ws://localhost:8000/chatroom?nickname=` + this.nickname;
-      this.websocket = new WebSocket(sockets_bay_url);
-      //
-      this.websocket.onopen = this.onSocketOpen;
-      this.websocket.onmessage = this.onSocketMessage;
-      this.websocket.onerror = this.onSockerError;
-    },
-    onSocketOpen(evt) {
-      this.connection_ready = true;
-    },
-    onSocketMessage(evt) {
-      //we parse the json that we receive
-      var received = JSON.parse(evt.data);
-      //check if it's our message or from a friend
-      this.messages.push({ from: "other", message: received.content });
-      //scroll to the bottom of the messages div
-      const messages_div = document.getElementById('messages');
-      messages_div.scrollTo({ top: messages_div.scrollHeight, behavior: 'smooth' });
-    },
-
-    onSockerError(evt) {
-      this.connection_error = true;
-    },
-
-    send_message() {
-      var to_send = { from: this.nickname, message: this.new_message };
-      this.websocket.send(JSON.stringify(to_send));
-      this.messages.push({ from: "me", message: this.new_message });
-      this.new_message = "";
-    }
-  },
-  mounted() {
-    this.init_chat();
-  }
-}
-</script>
 
 <style>
 body {
