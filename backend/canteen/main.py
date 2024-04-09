@@ -1,8 +1,8 @@
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 
-from backend.canteen.auth.router import router as auth_router
-from backend.canteen.chat.router import router as chat_router
+from canteen.auth.router import router as auth_router
+from canteen.chat.router import router as chat_router
 
 origins = [
     "http://localhost:8000",

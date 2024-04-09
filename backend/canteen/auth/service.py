@@ -6,9 +6,9 @@ from jose import jwt, JWTError
 from starlette import status
 from starlette.exceptions import HTTPException
 
-from backend.canteen.auth.model import UserInDbModel, TokenData, UserModel
-from backend.canteen.auth.security import verify_password
-from backend.canteen.config import setting, fake_users_db
+from canteen.auth.model import UserInDbModel, TokenData, UserModel
+from canteen.auth.security import verify_password
+from canteen.config import setting, fake_users_db
 
 oauth2_schema = OAuth2PasswordBearer(tokenUrl="token")
 

@@ -4,7 +4,7 @@ from typing import Union
 import bcrypt
 from jose import jwt
 
-from backend.canteen.config import setting
+from canteen.config import setting
 
 
 def verify_password(plain_password: str, hashed_password: str):
