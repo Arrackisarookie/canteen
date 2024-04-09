@@ -1,10 +1,8 @@
 from faker import Faker
 from fastapi import APIRouter
-from starlette.requests import Request
-from starlette.responses import HTMLResponse
 from starlette.websockets import WebSocket, WebSocketDisconnect
 
-from canteen.chat.schema import Room, User, Message
+from backend.canteen.chat.schema import Room, User, Message
 
 room = Room("main")
 fake = Faker(["zh_CN"])

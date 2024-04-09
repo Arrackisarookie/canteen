@@ -5,10 +5,10 @@ from fastapi.security import OAuth2PasswordRequestForm
 from starlette import status
 from starlette.exceptions import HTTPException
 
-from canteen.auth.model import UserModel, Token
-from canteen.auth.security import create_access_token
-from canteen.auth.service import get_current_active_user, authenticate_user
-from canteen.config import setting, fake_users_db
+from backend.canteen.auth.model import UserModel, Token
+from backend.canteen.auth.security import create_access_token
+from backend.canteen.auth.service import get_current_active_user, authenticate_user
+from backend.canteen.config import setting, fake_users_db
 
 router = APIRouter()
 
