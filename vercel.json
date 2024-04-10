@@ -4,12 +4,20 @@
       "src": "backend/canteen/main.py",
       "use": "@vercel/python",
       "config": { "maxLambdaSize": "15mb", "runtime": "python3.9" }
+    },
+    {
+      "src": "frontend/src/main.js",
+      "use": "@vercel/node"
     }
   ],
   "routes": [
     {
       "src": "/(.*)",
       "dest": "backend/canteen/main.py"
+    },
+    {
+      "src": "/front/(.*)",
+      "dest": "frontend/src/main.js"
     }
   ]
 }
